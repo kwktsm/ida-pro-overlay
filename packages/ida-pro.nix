@@ -2,6 +2,8 @@
   pkgs,
   lib,
   runfile,
+  idafile,
+  ida32file,
   ...
 }:
 let
@@ -98,6 +100,9 @@ pkgs.stdenv.mkDerivation rec {
     # to copy it to fix permissions and patch the executable.
     $(cat $NIX_CC/nix-support/dynamic-linker) $src \
       --mode unattended --debuglevel 4 --prefix $IDADIR
+
+    cp idafile $IDADIR
+    cp ida32file $IDADIR
 
     # Link the exported libraries to the output.
     for lib in $IDADIR/libida*; do
